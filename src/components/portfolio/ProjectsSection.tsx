@@ -204,11 +204,7 @@ const ProjectsSection = () => {
             {project.tech.slice(0, 4).map((tech, techIndex) => (
               <span
                 key={tech}
-                className={cn(
-                  "px-3 py-1 bg-accent/20 text-accent-foreground rounded-full text-xs font-medium transition-all duration-300",
-                  isHovered && "animate-leaf-fall"
-                )}
-                style={{ animationDelay: `${techIndex * 0.1}s` }}
+                className="px-3 py-1 bg-accent/20 text-accent-foreground rounded-full text-xs font-medium transition-all duration-300"
               >
                 {tech}
               </span>
