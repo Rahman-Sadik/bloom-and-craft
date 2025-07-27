@@ -8,35 +8,62 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Natural Organic Color Palette */
+    --background: 48 20% 97%; /* Warm cream #FAF9EE */
+    --foreground: 145 30% 22%; /* Deep forest green #2D4A3A */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 48 20% 97%; /* Warm cream */
+    --card-foreground: 145 30% 22%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 48 20% 97%;
+    --popover-foreground: 145 30% 22%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 90 15% 66%; /* Sage green #A2AF9B */
+    --primary-foreground: 48 20% 97%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 48 20% 89%; /* Soft mint #DCCFC0 */
+    --secondary-foreground: 145 30% 22%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 0 0% 93%; /* Light gray #EEEEEE */
+    --muted-foreground: 0 0% 35%; /* Medium gray #5A5A5A */
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 48 20% 89%; /* Soft mint */
+    --accent-foreground: 145 30% 22%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 48 20% 97%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 90 15% 88%; /* Sage green border */
+    --input: 90 15% 88%;
+    --ring: 90 15% 66%;
 
-    --radius: 0.5rem;
+    /* Organic Design Tokens */
+    --sage-hover: 90 15% 58%; /* Darker sage #8A9B89 */
+    --natural-shadow: 90 15% 66%; /* Sage for shadows */
+    
+    /* Gradients */
+    --gradient-warm: linear-gradient(135deg, hsl(48 20% 97%), hsl(48 20% 89%));
+    --gradient-sage: linear-gradient(135deg, hsl(90 15% 66%), hsl(48 20% 89%));
+    --gradient-organic: linear-gradient(180deg, hsl(48 20% 97%) 0%, hsl(48 20% 89%) 100%);
+    
+    /* Shadows */
+    --shadow-soft: 0 2px 8px hsl(90 15% 66% / 0.08);
+    --shadow-medium: 0 4px 16px hsl(90 15% 66% / 0.12);
+    --shadow-strong: 0 8px 32px hsl(90 15% 66% / 0.16);
+    --shadow-organic: 0 12px 40px hsl(90 15% 66% / 0.2);
+    
+    /* Animation Durations */
+    --duration-fast: 200ms;
+    --duration-normal: 300ms;
+    --duration-slow: 500ms;
+    --duration-organic: 800ms;
+    
+    /* Easing Functions */
+    --ease-organic: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --ease-natural: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+    --radius: 1rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +127,230 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground overflow-x-hidden;
+    font-feature-settings: "kern", "liga", "clig", "calt";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Custom scrollbar with organic styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary));
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--sage-hover));
+  }
+}
+
+@layer components {
+  /* Organic Animation Classes */
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-grow {
+    animation: grow 0.8s var(--ease-organic) forwards;
+  }
+
+  .animate-breathe {
+    animation: breathe 4s ease-in-out infinite;
+  }
+
+  .animate-drift {
+    animation: drift 20s linear infinite;
+  }
+
+  .animate-typewriter {
+    animation: typewriter 3s steps(30) forwards;
+  }
+
+  .animate-draw-line {
+    animation: drawLine 2s var(--ease-natural) forwards;
+  }
+
+  .animate-organic-entrance {
+    animation: organicEntrance 1s var(--ease-bounce) forwards;
+  }
+
+  /* Hover Effects */
+  .hover-lift {
+    transition: transform var(--duration-normal) var(--ease-natural), 
+                box-shadow var(--duration-normal) var(--ease-natural);
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-organic);
+  }
+
+  .hover-glow {
+    transition: box-shadow var(--duration-normal) var(--ease-natural);
+  }
+
+  .hover-glow:hover {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+  }
+
+  /* Custom cursor effects */
+  .cursor-organic {
+    cursor: none;
+  }
+
+  /* Background textures */
+  .paper-texture {
+    background-image: 
+      radial-gradient(circle at 25% 25%, hsl(var(--primary) / 0.02) 0%, transparent 25%),
+      radial-gradient(circle at 75% 75%, hsl(var(--accent) / 0.03) 0%, transparent 25%);
+  }
+
+  /* Glass morphism effect */
+  .glass-organic {
+    background: hsl(var(--background) / 0.8);
+    backdrop-filter: blur(12px);
+    border: 1px solid hsl(var(--border) / 0.5);
+  }
+
+  /* Natural shadow variations */
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+
+  .shadow-medium {
+    box-shadow: var(--shadow-medium);
+  }
+
+  .shadow-strong {
+    box-shadow: var(--shadow-strong);
+  }
+
+  .shadow-organic {
+    box-shadow: var(--shadow-organic);
+  }
+
+  /* Gradient backgrounds */
+  .bg-gradient-warm {
+    background: var(--gradient-warm);
+  }
+
+  .bg-gradient-sage {
+    background: var(--gradient-sage);
+  }
+
+  .bg-gradient-organic {
+    background: var(--gradient-organic);
+  }
+}
+
+@layer utilities {
+  /* Custom keyframes for organic animations */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+
+  @keyframes grow {
+    0% { 
+      transform: scale(0.8) translateY(20px); 
+      opacity: 0;
+    }
+    100% { 
+      transform: scale(1) translateY(0px); 
+      opacity: 1;
+    }
+  }
+
+  @keyframes breathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+
+  @keyframes drift {
+    0% { transform: translateX(-100px); }
+    100% { transform: translateX(calc(100vw + 100px)); }
+  }
+
+  @keyframes typewriter {
+    0% { width: 0; }
+    100% { width: 100%; }
+  }
+
+  @keyframes drawLine {
+    0% { width: 0; }
+    100% { width: 100%; }
+  }
+
+  @keyframes organicEntrance {
+    0% { 
+      transform: scale(0.6) rotate(-5deg);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.1) rotate(2deg);
+    }
+    100% { 
+      transform: scale(1) rotate(0deg);
+      opacity: 1;
+    }
+  }
+
+  @keyframes leafFall {
+    0% {
+      transform: translateY(-100px) rotate(0deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(100vh) rotate(360deg);
+      opacity: 0;
+    }
+  }
+
+  @keyframes ripple {
+    0% {
+      transform: scale(0);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+
+  /* Responsive text sizes with organic scaling */
+  .text-fluid-sm {
+    font-size: clamp(0.875rem, 2vw, 1rem);
+  }
+
+  .text-fluid-base {
+    font-size: clamp(1rem, 2.5vw, 1.125rem);
+  }
+
+  .text-fluid-lg {
+    font-size: clamp(1.125rem, 3vw, 1.25rem);
+  }
+
+  .text-fluid-xl {
+    font-size: clamp(1.25rem, 4vw, 1.5rem);
+  }
+
+  .text-fluid-2xl {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+  }
+
+  .text-fluid-3xl {
+    font-size: clamp(1.875rem, 6vw, 3rem);
+  }
+
+  .text-fluid-4xl {
+    font-size: clamp(2.25rem, 8vw, 4rem);
   }
 }
