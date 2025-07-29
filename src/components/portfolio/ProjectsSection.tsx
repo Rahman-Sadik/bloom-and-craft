@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { ExternalLink, Github, Play, ArrowRight, Sparkles } from 'lucide-react';
 
@@ -19,6 +20,7 @@ const ProjectsSection = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [filter, setFilter] = useState<'all' | 'web' | 'mobile' | 'fullstack'>('all');
+  const navigate = useNavigate();
   const sectionRef = useRef<HTMLDivElement>(null);
 
   const projects: Project[] = [
@@ -136,7 +138,7 @@ const ProjectsSection = () => {
         style={{ animationDelay: `${0.4 + index * 0.1}s` }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        onClick={() => setSelectedProject(project)}
+        onClick={() => navigate(`/project/${project.id}`)}
       >
         {/* Project image */}
         <div className="aspect-video relative overflow-hidden">
@@ -218,7 +220,13 @@ const ProjectsSection = () => {
 
           {/* View project button */}
           <div className="flex items-center justify-between">
-            <button className="group/btn flex items-center gap-2 text-primary font-medium transition-all duration-300 hover:gap-3">
+            <button 
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate(`/project/${project.id}`);
+              }}
+              className="group/btn flex items-center gap-2 text-primary font-medium transition-all duration-300 hover:gap-3"
+            >
               <span>View Project</span>
               <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-1" />
             </button>

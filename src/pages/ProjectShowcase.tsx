@@ -6,117 +6,196 @@ import { Card, CardContent } from "@/components/ui/card";
 
 // Mock project data - in a real app this would come from an API or database
 const projectData = {
-  "1": {
-    title: "E-Commerce Platform",
+  "ecommerce-platform": {
+    title: "EcoCommerce Platform",
     thumbnail: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1200&h=600",
-    description: "A full-stack e-commerce platform built with React, Node.js, and PostgreSQL. Features include user authentication, payment processing, inventory management, and real-time analytics.",
-    longDescription: "This comprehensive e-commerce solution was designed to handle high-traffic scenarios while maintaining excellent user experience. The platform includes advanced features like AI-powered product recommendations, multi-vendor support, and comprehensive analytics dashboard.",
-    technologies: ["React", "Node.js", "PostgreSQL", "Stripe", "Redis", "Docker"],
-    githubUrl: "https://github.com/example/ecommerce",
-    liveUrl: "https://ecommerce-demo.example.com",
+    description: "Sustainable e-commerce platform with carbon footprint tracking and eco-friendly product recommendations.",
+    longDescription: "A full-featured e-commerce platform focused on sustainability, featuring real-time carbon footprint calculation, eco-friendly product recommendations, and integrated offset programs. This comprehensive solution was designed to handle high-traffic scenarios while maintaining excellent user experience and environmental consciousness.",
+    technologies: ["React", "Node.js", "PostgreSQL", "Stripe", "AWS", "Redux"],
+    githubUrl: "https://github.com/example/eco-commerce",
+    liveUrl: "https://eco-commerce-demo.com",
     date: "2024-01-15",
     author: "John Doe",
     codeBlocks: [
       {
-        title: "User Authentication Middleware",
+        title: "Carbon Footprint Calculator",
         language: "javascript",
-        code: `const authenticateToken = (req, res, next) => {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
-
-  if (!token) {
-    return res.status(401).json({ error: 'Access token required' });
-  }
-
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    if (err) {
-      return res.status(403).json({ error: 'Invalid token' });
-    }
-    req.user = user;
-    next();
+        code: `const calculateCarbonFootprint = async (product, shippingDistance) => {
+  const productEmissions = product.weight * product.carbonIntensity;
+  const shippingEmissions = shippingDistance * 0.21; // kg CO2 per km
+  const packagingEmissions = product.packaging.recyclable ? 0.5 : 2.1;
+  
+  const totalEmissions = productEmissions + shippingEmissions + packagingEmissions;
+  
+  // Store calculation for analytics
+  await analytics.track('carbon_calculated', {
+    productId: product.id,
+    emissions: totalEmissions,
+    shippingDistance,
+    timestamp: Date.now()
   });
+  
+  return {
+    total: totalEmissions,
+    breakdown: {
+      product: productEmissions,
+      shipping: shippingEmissions,
+      packaging: packagingEmissions
+    },
+    offsetCost: totalEmissions * 0.02 // $0.02 per kg CO2
+  };
 };`
       },
       {
-        title: "Product Search Component",
+        title: "Eco-Friendly Product Recommender",
         language: "tsx",
-        code: `const ProductSearch: React.FC = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(false);
+        code: `const EcoRecommendations: React.FC<{ productId: string }> = ({ productId }) => {
+  const [recommendations, setRecommendations] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const debouncedSearch = useCallback(
-    debounce(async (term: string) => {
-      if (!term.trim()) return;
-      
-      setLoading(true);
+  useEffect(() => {
+    const fetchEcoAlternatives = async () => {
       try {
-        const response = await api.searchProducts(term);
-        setProducts(response.data);
+        const response = await api.get(\`/products/\${productId}/eco-alternatives\`);
+        const alternatives = response.data.filter(product => 
+          product.sustainabilityScore > 7 && 
+          product.certifications.includes('eco-friendly')
+        );
+        
+        setRecommendations(alternatives);
       } catch (error) {
-        console.error('Search failed:', error);
+        console.error('Failed to fetch eco alternatives:', error);
       } finally {
         setLoading(false);
       }
-    }, 300),
-    []
-  );
+    };
 
-  useEffect(() => {
-    debouncedSearch(searchTerm);
-  }, [searchTerm, debouncedSearch]);
+    fetchEcoAlternatives();
+  }, [productId]);
 
   return (
-    <div className="search-container">
-      <input
-        type="text"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        placeholder="Search products..."
-        className="search-input"
-      />
-      {loading && <div className="loading-spinner" />}
-      <ProductList products={products} />
+    <div className="eco-recommendations">
+      <h3 className="text-lg font-semibold text-green-600 mb-4">
+        🌱 Eco-Friendly Alternatives
+      </h3>
+      {loading ? (
+        <div className="animate-pulse space-y-3">
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="h-20 bg-gray-200 rounded" />
+          ))}
+        </div>
+      ) : (
+        <div className="space-y-4">
+          {recommendations.map(product => (
+            <EcoProductCard key={product.id} product={product} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };`
       }
     ]
   },
-  "2": {
-    title: "Task Management App",
+  "task-manager": {
+    title: "Zen Task Manager",
     thumbnail: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?auto=format&fit=crop&w=1200&h=600",
-    description: "A collaborative task management application with real-time updates, team collaboration features, and advanced project tracking capabilities.",
-    longDescription: "Built for modern teams, this task management app focuses on simplicity and efficiency. It features drag-and-drop interfaces, real-time collaboration, time tracking, and comprehensive reporting tools.",
-    technologies: ["Vue.js", "Firebase", "Vuex", "Tailwind CSS", "PWA"],
-    githubUrl: "https://github.com/example/taskapp",
-    liveUrl: "https://taskapp-demo.example.com",
+    description: "Mindful productivity app with natural themes and focus modes to promote work-life balance.",
+    longDescription: "A beautiful task management application that promotes mindful productivity through natural themes, breathing exercises, and distraction-free focus modes. Built for modern teams who value both productivity and mental wellness.",
+    technologies: ["Vue.js", "TypeScript", "Supabase", "Tailwind", "PWA"],
+    githubUrl: "https://github.com/example/zen-tasks",
+    liveUrl: "https://zen-tasks-demo.com",
     date: "2023-11-20",
     author: "John Doe",
     codeBlocks: [
       {
-        title: "Real-time Task Updates",
-        language: "javascript",
-        code: `// Firebase real-time listener for task updates
-const setupTaskListener = (projectId, callback) => {
-  const tasksRef = db.collection('projects').doc(projectId).collection('tasks');
-  
-  return tasksRef.onSnapshot((snapshot) => {
-    const tasks = [];
-    snapshot.docChanges().forEach((change) => {
-      const task = { id: change.doc.id, ...change.doc.data() };
-      
-      if (change.type === 'added') {
-        tasks.push({ ...task, action: 'added' });
-      } else if (change.type === 'modified') {
-        tasks.push({ ...task, action: 'modified' });
-      } else if (change.type === 'removed') {
-        tasks.push({ ...task, action: 'removed' });
-      }
-    });
+        title: "Mindful Focus Mode Component",
+        language: "vue",
+        code: `<template>
+  <div class="focus-mode" :class="{ active: focusActive }">
+    <div class="breathing-circle" ref="breathingCircle">
+      <div class="inner-circle" :style="circleStyle"></div>
+    </div>
     
-    callback(tasks);
-  });
+    <div class="focus-controls">
+      <button @click="startFocusSession" class="focus-btn">
+        {{ focusActive ? 'End Session' : 'Start Focus' }}
+      </button>
+      
+      <div class="timer" v-if="focusActive">
+        {{ formatTime(remainingTime) }}
+      </div>
+    </div>
+    
+    <TaskList 
+      :tasks="activeTasks" 
+      :focus-mode="focusActive"
+      @task-complete="handleTaskComplete"
+    />
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref, computed, onMounted } from 'vue'
+
+const focusActive = ref(false)
+const remainingTime = ref(25 * 60) // 25 minutes in seconds
+const breathingPhase = ref<'inhale' | 'exhale'>('inhale')
+
+const circleStyle = computed(() => ({
+  transform: \`scale(\${breathingPhase.value === 'inhale' ? 1.2 : 0.8})\`,
+  transition: 'transform 4s ease-in-out'
+}))
+
+const startFocusSession = () => {
+  focusActive.value = !focusActive.value
+  if (focusActive.value) {
+    startBreathingAnimation()
+    startTimer()
+  }
+}
+</script>`
+      }
+    ]
+  },
+  "fitness-tracker": {
+    title: "Nature Fitness Tracker",
+    thumbnail: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1200&h=600",
+    description: "Outdoor fitness tracking with environmental awareness and location-based insights.",
+    longDescription: "Mobile fitness application that encourages outdoor activities while providing environmental data about workout locations. Features include air quality monitoring, nature trail recommendations, and wildlife spotting integration.",
+    technologies: ["React Native", "Firebase", "Maps API", "TensorFlow", "Redux"],
+    githubUrl: "https://github.com/example/nature-fitness",
+    liveUrl: "https://nature-fitness-demo.com",
+    date: "2023-09-10",
+    author: "John Doe",
+    codeBlocks: [
+      {
+        title: "Location-Based Workout Tracking",
+        language: "javascript",
+        code: `const trackWorkout = async (workoutType, location) => {
+  const workoutSession = {
+    id: generateUUID(),
+    type: workoutType,
+    startTime: Date.now(),
+    location: {
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+      altitude: location.coords.altitude
+    },
+    environmentalData: await getEnvironmentalData(location)
+  };
+
+  // Start real-time tracking
+  const watchId = navigator.geolocation.watchPosition(
+    (position) => {
+      updateWorkoutPath(workoutSession.id, position);
+      checkForWildlifeSpottings(position);
+    },
+    (error) => console.error('GPS tracking error:', error),
+    { enableHighAccuracy: true, maximumAge: 10000, timeout: 5000 }
+  );
+
+  return { workoutSession, watchId };
 };`
       }
     ]
