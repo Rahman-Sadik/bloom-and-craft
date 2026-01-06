@@ -6,7 +6,7 @@ import {
   createRateLimiter,
   canDelete,
   normalizeUsers,
-} from "./utils"
+} from "./user"
 
 type UserRecord = {
   id: string
